@@ -17,6 +17,10 @@ public class DataTypes {
         String str = "Hello Welt";
         System.out.println(str);
 
+        var d1 = 0.;
+        var d2 = 5e4;
+        System.out.println(d1 + " " + d2);
+
 
     }
 }

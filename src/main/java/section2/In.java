@@ -20,5 +20,7 @@ public class In {
         var str = new Scanner(System.in).nextLine();
         System.out.println("String: " + str);
 
+
+
     }
 }
