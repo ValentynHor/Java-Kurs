@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class CrazyStreams {
+public class CrazyStreamsMain {
 
     public static void main(String[] args) {
 
@@ -148,7 +148,7 @@ public class CrazyStreams {
     public static Map<String, List<Account>> groupAccountsByEmailDomain(List<Account> list) {
 
         return list.stream()
-                .collect(Collectors.groupingBy(CrazyStreams::extractEmailDomain));
+                .collect(Collectors.groupingBy(CrazyStreamsMain::extractEmailDomain));
     }
 
     /**
@@ -197,7 +197,7 @@ public class CrazyStreams {
      */
     public static boolean containsAccountWithEmailDomain(String emailDomain, List<Account> list) {
         return list.stream()
-                .map(CrazyStreams::extractEmailDomain)
+                .map(CrazyStreamsMain::extractEmailDomain)
                 .anyMatch(domain -> domain.equals(emailDomain));
     }
 
@@ -243,10 +243,14 @@ public class CrazyStreams {
      * The key is email and the value is balance
      *
      * @param year the year of account creation
+     * @param list a list of accounts
      * @return map of account by its ids the were created in a particular year
      */
-    public Map<String, BigDecimal> collectBalancesByEmailForAccountsCreatedOn(int year) {
-        throw new ExerciseNotCompletedException();
+    public Map<String, BigDecimal> collectBalancesByEmailForAccountsCreatedOn(int year, List<Account> list) {
+        return list.stream()
+                .filter(a -> a.getCreationDate().getYear() == year)
+                .collect(Collectors.toMap(Account::getEmail, Account::getBalance));
+
     }
 
     /**
@@ -255,8 +259,10 @@ public class CrazyStreams {
      *
      * @return a map where key is a last name and value is a set of first names
      */
-    public Map<String, Set<String>> groupFirstNamesByLastNames() {
-        throw new ExerciseNotCompletedException();
+    public Map<String, Set<String>> groupFirstNamesByLastNames(List<Account> list) {
+        return list.stream()
+                .collect(Collectors.groupingBy(Account::getLastName, Collectors
+                        .mapping(Account::getFirstName, Collectors.toSet())));
     }
 
     /**
@@ -265,8 +271,11 @@ public class CrazyStreams {
      *
      * @return a map where a key is a birthday month and value is comma-separated first names
      */
-    public Map<Month, String> groupCommaSeparatedFirstNamesByBirthdayMonth() {
-        throw new ExerciseNotCompletedException();
+    public Map<Integer, String> groupCommaSeparatedFirstNamesByBirthdayMonth(List<Account> list) {
+        return list.stream()
+                .collect(Collectors.groupingBy(a -> a.getBirthday().getMonth(), Collectors.mapping(
+                        Account::getFirstName, Collectors.joining(", ")
+                )));
     }
 
     /**
@@ -275,9 +284,12 @@ public class CrazyStreams {
      *
      * @return a map where key is a creation month and value is total balance of all accounts created in that month
      */
-    public Map<Month, BigDecimal> groupTotalBalanceByCreationMonth() {
-        throw new ExerciseNotCompletedException();
-    }
+    /*public Map<Month, BigDecimal> groupTotalBalanceByCreationMonth(List<Account> list) {
+        return list.stream()
+                .collect(Collectors.groupingBy(a->a.getBirthday().getMonth(), Collectors.mapping(
+
+                )))
+    }*/
 
     /**
      * Returns a {@link Map} where key is a letter {@link Character}, and value is a number of its occurrences in
@@ -285,7 +297,7 @@ public class CrazyStreams {
      *
      * @return a map where key is a letter and value is its count in all first names
      */
-    public Map<Character, Long> getCharacterFrequencyInFirstNames() {
+    public Map<Character, Long> getCharacterFrequencyInFirstNames(List<Account> list) {
         throw new ExerciseNotCompletedException();
     }
 
@@ -296,7 +308,9 @@ public class CrazyStreams {
      *
      * @return a map where key is a letter and value is its count ignoring case in all first and last names
      */
-    public Map<Character, Long> getCharacterFrequencyIgnoreCaseInFirstAndLastNames(int nameLengthBound) {
+    public Map<Character, Long> getCharacterFrequencyIgnoreCaseInFirstAndLastNames(
+            int nameLengthBound,
+            List<Account> list) {
         throw new ExerciseNotCompletedException();
     }
 
