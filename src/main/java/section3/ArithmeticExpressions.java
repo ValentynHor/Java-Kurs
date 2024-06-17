@@ -23,6 +23,8 @@ public class ArithmeticExpressions {
             System.out.println(a / b);
             //Division mit Rest; return Rest
             System.out.println(a % b);
+
+
         }
     }
 }

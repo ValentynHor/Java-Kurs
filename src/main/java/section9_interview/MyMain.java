@@ -32,7 +32,7 @@ public class MyMain extends Abstract1 implements ConstantInterface, ConstantInte
         System.out.println(obj1.hashCode());
         System.out.println(obj2.hashCode());
 
-        throw new RuntimeException("sg");
+        System.out.println(obj1.getClass());
 
 
 
